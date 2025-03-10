@@ -2,15 +2,21 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 public class ImageResizer
 {
-    public static void Main(string[] args)
+    public static int Main(string[] args)
     {
-        string folderPath = "D:\\University\\22\\OOP\\Super_Mario\\Resources\\super mario\\Maps"; // 將此處替換為您的資料夾路徑
-        string outputFolder = "放大後的圖片資料夾路徑"; // 將此處替換為您要儲存放大後圖片的資料夾路徑
-        double scaleFactor = 1.4;
+        if (args.Length < 3)
+        {
+            return 1;
+        }
+        Console.WriteLine("來源資料夾路徑:{0}", args[0]);
+        Console.WriteLine("輸出資料夾路徑:{0}", args[1]);
+        Console.WriteLine("放大倍率:{0}", args[2]);
+        string folderPath = args[0]; 
+        string outputFolder = args[1]; 
+        double scaleFactor = Convert.ToDouble(args[2]);
 
         try
         {
@@ -53,7 +59,7 @@ public class ImageResizer
                         using (Graphics graphics = Graphics.FromImage(resizedImage))
                         {
                             // 設定插補模式以獲得更好的品質
-                            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            //graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
                             // 繪製放大的圖片
                             graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
@@ -62,7 +68,6 @@ public class ImageResizer
                         // 儲存放大的圖片
                         string outputFilePath = Path.Combine(outputFolder, Path.GetFileName(imageFile));
                         resizedImage.Save(outputFilePath);
-
                         Console.WriteLine($"已放大並儲存：{outputFilePath}");
                     }
                 }
@@ -74,5 +79,6 @@ public class ImageResizer
         {
             Console.WriteLine($"發生錯誤：{ex.Message}");
         }
+        return 0;
     }
 }
