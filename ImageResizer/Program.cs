@@ -14,9 +14,9 @@ public class ImageResizer
         }
 
         // args 輸入
-        Console.WriteLine("來源資料夾路徑:{0}", args[0]);
-        Console.WriteLine("輸出資料夾路徑:{0}", args[1]);
-        Console.WriteLine("放大倍率:{0}", args[2]);
+        Console.WriteLine($"來源資料夾路徑:{args[0]}");
+        Console.WriteLine($"輸出資料夾路徑:{args[1]}");
+        Console.WriteLine($"放大倍率:{args[2]}");
         string folderPath = args[0]; 
         string outputFolder = args[1]; 
         double scaleFactor = Convert.ToDouble(args[2]);
@@ -45,19 +45,19 @@ public class ImageResizer
         // 取得所有圖片檔案
         string[] imageFiles = Directory.GetFiles(sourceFolder, "*.jpg");
         string[] pngFiles = Directory.GetFiles(sourceFolder, "*.png");
-        string[] bmpFiles = Directory.GetFiles(sourceFolder, "*.bmp");
-        string[] gifFiles = Directory.GetFiles(sourceFolder, "*.gif");
-        string[] tiffFiles = Directory.GetFiles(sourceFolder, "*.tiff");
-        string[] jpegFiles = Directory.GetFiles(sourceFolder, "*.jpeg");
+        //string[] bmpFiles = Directory.GetFiles(sourceFolder, "*.bmp");
+        //string[] gifFiles = Directory.GetFiles(sourceFolder, "*.gif");
+        //string[] tiffFiles = Directory.GetFiles(sourceFolder, "*.tiff");
+        //string[] jpegFiles = Directory.GetFiles(sourceFolder, "*.jpeg");
 
-        string[] allFiles = new string[imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length + tiffFiles.Length + jpegFiles.Length];
-
+        //string[] allFiles = new string[imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length + tiffFiles.Length + jpegFiles.Length];
+        string[] allFiles = new string[imageFiles.Length + pngFiles.Length];
         imageFiles.CopyTo(allFiles, 0);
         pngFiles.CopyTo(allFiles, imageFiles.Length);
-        bmpFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length);
-        gifFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length);
-        tiffFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length);
-        jpegFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length + tiffFiles.Length);
+        //bmpFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length);
+        //gifFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length);
+        //tiffFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length);
+        //jpegFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length + tiffFiles.Length);
 
         foreach (string imageFile in allFiles)
         {
