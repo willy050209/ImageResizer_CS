@@ -5,6 +5,34 @@ using System.IO;
 
 public class ImageResizer
 {
+    /// <summary>
+    /// Displays the progress bar
+    /// </summary>
+    /// <param name="total">Total number of iterations</param>
+    /// <param name="current">Current iteration number</param>
+    /// <param name="width">Width of the progress bar</param>
+    static void ShowProgressBar(int total, int current,string showText = "", int width = 50)
+    {
+        // 計算完成百分比
+        float ratio = (float)current / total;
+        int completedWidth = (int)(ratio * width);
+
+        // 輸出進度條
+        Console.Write($"{showText}[");
+        for (int i = 0; i < width; ++i)
+        {
+            if (i < completedWidth)
+            {
+                Console.Write("="); // 已完成部分
+            }
+            else
+            {
+                Console.Write(" "); // 未完成部分
+            }
+        }
+        Console.Write($"] {Math.Round(ratio * 100)}%\r");
+    }
+
     public static int Main(string[] args)
     {
         //檢查輸入格式
@@ -59,8 +87,10 @@ public class ImageResizer
         //tiffFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length);
         //jpegFiles.CopyTo(allFiles, imageFiles.Length + pngFiles.Length + bmpFiles.Length + gifFiles.Length + tiffFiles.Length);
 
+        int currentIteration = 0;
         foreach (string imageFile in allFiles)
         {
+            ShowProgressBar(allFiles.Length, currentIteration++);
             // 讀取圖片
             using (Image originalImage = Image.FromFile(imageFile))
             {
@@ -94,10 +124,12 @@ public class ImageResizer
 
                     resizedImage.Save(outputFilePath);
 
-                    Console.WriteLine($"已放大並儲存：{outputFilePath}");
+                    //Console.WriteLine($"已放大並儲存：{outputFilePath}");
                 }
             }
         }
+        ShowProgressBar(allFiles.Length, allFiles.Length);
+        Console.WriteLine();
 
         // 遞迴處理子目錄
         string[] subdirectories = Directory.GetDirectories(sourceFolder);
